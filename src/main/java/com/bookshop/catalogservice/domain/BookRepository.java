@@ -1,8 +1,10 @@
 package com.bookshop.catalogservice.domain;
 
+import org.springframework.data.repository.CrudRepository;
+
 import java.util.Optional;
 
-public interface BookRepository {
+public interface BookRepository  extends CrudRepository<Book,Long> {
 
     Iterable<Book> findAll();
 

@@ -15,12 +15,33 @@ repositories {
     mavenCentral()
 }
 
+bootBuildImage{
+    imageName = "${project.name}"
+    environment = ["BP_JVM_VERSION": "17.*"]
+
+    docker {
+        publishRegistry {
+            username = project.findProperty("registryUsername")
+            password = project.findProperty("registryToken")
+            url = project.findProperty("registryUrl")
+        }
+    }
+}
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web:6.1.5'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config:4.1.0'
+    implementation 'org.springframework.cloud:spring-cloud-starter:4.0.4'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.0.4'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+bootRun{
+    systemProperty 'spring.profiles.active', 'testdata'
+}
 tasks.named('test') {
     useJUnitPlatform()
 }

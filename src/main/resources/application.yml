@@ -1,4 +1,5 @@
 server:
+
   port: 9001
   tomcat:
     connection-timeout: 2s
@@ -8,7 +9,21 @@ server:
       min-spare: 10
   error:
     include-message: always
-spring:
-  application:
-    name: "Book Service"
 
+spring:
+  datasource:
+    username: postgres
+    password: Trap.4311
+    url: jdbc:postgresql://localhost:5432/polardb_catalog
+    hikari:
+      connection-timeout: 2000
+      maximum-pool-size: 5
+  application:
+    name: catalog-service
+  config:
+    import: "optional:configserver:"
+  cloud:
+    config:
+      uri: http://localhost:8888
+polar:
+  greeting: Welcome to the local book catalog
